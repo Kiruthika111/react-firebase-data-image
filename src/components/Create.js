@@ -7,6 +7,9 @@ var image_link_firebase;
 class Create extends Component {
 
   constructor() {
+    var today = new Date(),
+    time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds(),
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     super();
     this.ref = firebase.firestore().collection('boards');
     this.state = {
@@ -15,7 +18,9 @@ class Create extends Component {
       author: '',
       image: null,
       progress:0,
-      downloadURL: null
+      downloadURL: null,
+      currentDate: date.toLocaleString(),
+      currentTime: time.toLocaleString()
     };
     
   }
@@ -67,15 +72,17 @@ class Create extends Component {
       image: e.target.files[0]
     })
   }
-    // console.log(e.target.files[0])
+    
 }
 
 handleUpload = () =>{
+  if(this.state.image){
   // console.log(this.state.image);
   let file = this.state.image;
   var storage = firebase.storage();
   var storageRef = storage.ref();
-  var uploadTask = storageRef.child('blogimages/' + file.name).put(file);
+  var file_Name = file.name + '_' + this.state.currentDate + '_' + this.state.currentTime  ;
+  var uploadTask = storageRef.child('blogimages/' + file_Name).put(file);
 
   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
     (snapshot) =>{
@@ -96,6 +103,10 @@ handleUpload = () =>{
 
    }
  ) 
+  }
+  else {
+    alert("select an image");
+  }
 }
 
 

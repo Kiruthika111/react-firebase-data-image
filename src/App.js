@@ -46,7 +46,7 @@ class App extends Component {
           </div>
           <div class="panel-body">
             <h4><Link to="/create">Add Board</Link></h4>
-            <table class="table table-stripe">
+            {/* <table class="table table-stripe">
               <thead>
                 <tr>
                   <th>Title</th>
@@ -61,11 +61,18 @@ class App extends Component {
                     <td><Link to={`/show/${board.key}`}>{board.title}</Link></td>
                     <td>{board.description}</td>
                     <td>{board.author}</td>
-                    {board.downloadURL && <td><a href={board.downloadURL}> Image of the blog </a></td> }
+                    {board.downloadURL && <td><img src={board.downloadURL} style={{width: "100px", height: "102px" }} alt=""/></td> }
                   </tr>
                 )}
               </tbody>
-            </table>
+            </table> */}
+            {this.state.boards.map(board =>
+            <div>
+            <h1><Link to={`/show/${board.key}`} style={{textDecoration: "none"}}>{board.title}</Link></h1>
+            <p>{board.description}</p>
+            {board.downloadURL && <td><img src={board.downloadURL} style={{width: "100px", height: "102px" }} alt=""/></td> }
+            </div>
+            )}
           </div>
         </div>
       </div>
